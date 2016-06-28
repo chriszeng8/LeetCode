@@ -11,30 +11,16 @@ class Solution(object):
         :type l2: ListNode
         :rtype: ListNode
         """
-        if not l1:
-            return l2
-        elif not l2:
-            return l1
-        carry=0
-        head=l1
-        while l1.next and l2.next:
-            l1.val,carry=(l1.val+l2.val+carry)%10,(l1.val+l2.val+carry)/10
-            l1,l2=l1.next,l2.next
-        l1.val,carry=(l1.val+l2.val+carry)%10,(l1.val+l2.val+carry)/10
-        if l2.next:
-            l1.next=l2.next
-            l1=l1.next
-        elif l1.next:
-            l1=l1.next
-        elif carry>0:
-            l1.next=ListNode(1)
-            l1.next.next=None
-            return head
-        while l1.next:
-            l1.val,carry=(l1.val+carry)%10,(l1.val+carry)/10
-            l1=l1.next
-        l1.val,carry=(l1.val+carry)%10,(l1.val+carry)/10
-        if carry>0:
-            l1.next=ListNode(1)
-            l1.next.next=None
-        return head
+        ret = ListNode(0)
+        cur = ret
+        add = 0
+
+        while l1 or l2 or add:
+            val = (l1.val if l1 else 0) + (l2.val if l2 else 0) + add
+            add = val / 10
+            cur.next = ListNode(val % 10)
+            cur = cur.next
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
+
+        return ret.next
