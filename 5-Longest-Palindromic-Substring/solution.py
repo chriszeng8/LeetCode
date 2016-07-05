@@ -1,35 +1,22 @@
 class Solution(object):
-    def longestPalindrome(self,s):
+    def longestPalindrome(self, s):
         """
         :type s: str
         :rtype: str
         """
-        templongStr = 1
-        str_len = len(s)
-        longestStart=0
-        longestEnd=0
-        
-        for i in range(str_len)[:-1:]:
-            start = i
-            end = i+1
-            while (start>=0) and (end<str_len) and (s[start]==s[end]):
-                if (end-start)+1 > templongStr:
-                    templongStr = end-start+1 
-                    longestStart = start
-                    longestEnd = end
-                start=start-1
-                end= end+1
-    
-            start = i-1
-            end = i+1
-    
-    
-            while (start>=0) and (end<str_len) and (s[start]==s[end]):
-                if (end-start)+1 > templongStr:
-                    templongStr = end-start
-                    longestStart = start
-                    longestEnd = end
-                start=start-1
-                end= end+1
-            
-        return s[longestStart:longestEnd+1]
+        newS = '#%s#' % '#'.join(s)
+        length, center, rightMost, maxCenter, maxLen, i = len(newS), 0, 0, 0, 0, 0
+        pArr = [0] * length
+        while i < length:
+            pArr[i] = 1 if rightMost < i else min(rightMost-i, pArr[(center << 1) - i])
+            while i + pArr[i] < length and i - pArr[i] > -1 and newS[i + pArr[i]] == newS[i - pArr[i]]:
+                pArr[i] += 1
+            if i + pArr[i] > rightMost:
+                center = i
+                rightMost = i + pArr[i]
+                if pArr[i] > maxLen:
+                    maxLen = pArr[i]
+                    maxCenter = i
+            i += 1
+        start = (maxCenter - maxLen + 1) >> 1
+        return s[start: start + maxLen - 1]
