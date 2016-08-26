@@ -10,7 +10,7 @@ class Solution(object):
         nums.sort()
         status = None
         temp_diff = 0
-        min_closest_diff = 99999999999999999999999999
+        min_closest_diff = sys.maxint
         closest_sum = None
 
         # print nums
@@ -25,9 +25,11 @@ class Solution(object):
 
                 if (temp_sum<target):
                     j = j+1
+
                 elif (temp_sum>target):
                     k = k-1
                 else:
+                    # print "equal"
                     return temp_sum
 
                 if (min_closest_diff>abs_diff):
