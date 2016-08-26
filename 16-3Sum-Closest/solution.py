@@ -1,9 +1,9 @@
 class Solution(object):
     def threeSumClosest(self, nums, target):
+        
         """
-        :type nums: List[int]
-        :type target: int
-        :rtype: int
+        explanation of algo:
+        https://discuss.leetcode.com/topic/17215/c-solution-o-n-2-using-sort
         """ 
         min_diff = None
         num_len = len(nums)
