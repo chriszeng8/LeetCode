@@ -14,6 +14,8 @@ class Solution(object):
         # need to store odd end elem, even start elem, 
         # odd linked list, even linked list
         # elem = head;
+        if head = None:
+            return None;
         odd_head = head;
         even_head = ListNode(head.next.val);
         even_elem = even_head;
